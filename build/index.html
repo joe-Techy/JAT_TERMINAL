@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J.A-T.Terminal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> <!-- Include Font Awesome CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            width: 100%;
+            text-align: center;
+            padding: 1em 0;
+            position: relative;
+        }
+        .top-elements {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            padding: 0 2em;
+            margin-top: 1em;
+        }
+        .icon-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+        .icon-container i {
+            font-size: 24px;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+        .icon-container.active i {
+            color: #00ff00; /* Green color for active state */
+        }
+        .icon-container span {
+            font-size: 14px;
+            color: #fff;
+        }
+        .popup {
+            display: none;
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .popup img {
+            max-width: 100%;
+        }
+        main {
+            max-width: 800px;
+            background-color: #fff;
+            padding: 2em;
+            margin: 2em 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            margin-top: 1em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>J.A-T.Terminal</h1>
+        <div class="top-elements">
+            <div class="icon-container" onclick="showPopup('welcome', this)">
+                <i class="fas fa-globe"></i>
+            </div>
+            <div class="icon-container" onclick="showPopup('tools', this)">
+                <i class="fas fa-tools"></i>
+            </div>
+            <div class="icon-container" onclick="showPopup('manager', this)">
+                <i class="fas fa-user-tie"></i>
+            </div>
+        </div>
+        <div id="welcome" class="popup">
+            <p>Welcome to J.A-T.Terminal</p>
+        </div>
+        <div id="tools" class="popup">
+            <img src="{{ url_for('static', filename='images/speed_test.png') }}" alt="Internet Speed Test">
+        </div>
+        <div id="manager" class="popup">
+            <p>Manager Section</p>
+        </div>
+    </header>
+    <main>
+        <section>
+            <h2>Profile Picture</h2>
+            <img src="{{ url_for('static', filename='images/profile.jpg') }}" alt="Profile Picture" style="width: 110px; height: 150px;">
+        </section>            
+        <section>
+            <h2>About Me</h2>
+            <p>I am a software developer specializing in web and mobile applications.</p>
+        </section>
+        <section>
+            <h2>Contact Information</h2>
+            <p>Email: agbo0225@gmail.com</p>
+        </section>
+        <section>
+            <h2>"Scan Me"</h2>
+            <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?data=https://your-website-url.com&size=200x200" alt="QR Code">
+        </section>
+        <section>
+            <h2>GitHub</h2>
+            <a href="https://github.com/Joe-Techy" target="_blank">Visit my GitHub</a>
+        </section>
+        <section>
+            <h2>Resume</h2>
+            <a href="{{ url_for('static', filename='docs/resume.pdf') }}" target="_blank">View my Resume</a>
+        </section>            
+    </main>
+    <script>
+        function showPopup(id, element) {
+            const popups = document.querySelectorAll('.popup');
+            popups.forEach(popup => {
+                if (popup.id === id) {
+                    popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+                } else {
+                    popup.style.display = 'none';
+                }
+            });
+            const icons = document.querySelectorAll('.icon-container');
+            icons.forEach(icon => {
+                if (icon === element) {
+                    icon.classList.toggle('active');
+                } else {
+                    icon.classList.remove('active');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
